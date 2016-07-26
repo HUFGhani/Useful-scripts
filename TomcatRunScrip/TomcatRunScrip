@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+puts "1 "
+puts "2 "
+puts "3 "
+puts "0 "
+site_type = gets.chomp
+Dir.chdir("/opt")
+def search
+       $count = Dir[yield].count
+       for n in 1..$count
+               siteDIR = Dir[yield]
+       $sites = Hash[(1..n).to_a.zip(siteDIR.to_a)]
+       end
+       $sites.each{|k,v| puts "#{k}: #{v}"}
+       puts "Please select a site to run:"
+       site_n = gets.chomp
+       puts "_______________________________________________________"
+       puts $sites[site_n.to_i]     
+       puts "_______________________________________________________"
+       exec( "sudo #{$sites[site_n.to_i]}/tomcat/bin/becs_tomcat console" )
+end
+
+case site_type
+when "1" then
+puts "_______________________________________________________"
+search { "*"}
+when "2" then
+puts "_______________________________________________________"
+search { "*"}
+when "3" then
+puts "_______________________________________________________"
+search {"*"}
+else
+puts "_______________________________________________________"
+abort("She cannot take any more of this, Captain!")
+end
+
